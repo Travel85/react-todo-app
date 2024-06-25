@@ -1,20 +1,22 @@
-import { Fragment, useRef, useState } from "react";
+import { useRef, useState } from "react";
+import { Fragment } from "react";
 
-export function CategoryDropDown({ todos, setTodos }) {
+export function CategoryDropDown({ todos, setTodos,filteredTodos, setFilteredTodos }) {
   //ein State verwenden und categories als array speichern
   //dann mit includes prüfen, ob es bereits vorhanden ist und dann erst hinzufügen
   const currentCategory = useRef();
   //const [todos, setTodos] = useState(storedTodos);
-  const [categories, setCategories] = useState([]);
+
 
   function filterCategories() {
-    console.log(todos);
-    setCategories(
+    setFilteredTodos(
       todos.filter((todo) => {
         return todo.category === currentCategory.current.value;
       })
     );
-    console.log(currentCategory.current.value);
+    currentCategory.current.value = "";
+    // console.log(categories);
+    // console.log(currentCategory.current.value);
 
     /*  console.log(currentCategory.current.value);
     if (currentCategory.current.value !== "") {
@@ -25,7 +27,9 @@ export function CategoryDropDown({ todos, setTodos }) {
       );
     } */
   }
-  if (categories.length > 0) {
+  function clearFilteredTodos() {
+    setFilteredTodos([]);
+  }
     return (
       <Fragment>
         <label htmlFor="category-choice">Choose a category:</label>
@@ -34,28 +38,9 @@ export function CategoryDropDown({ todos, setTodos }) {
           id="category-choice"
           name="category-choice"
           ref={currentCategory}
-          onClick={filterCategories}
+          onChange={filterCategories}
         />
-        <datalist id="categories">
-          {categories
-            ? categories.map((todo) => {
-                return <option key={todo.id} value={todo.category}></option>;
-              })
-            : null}
-        </datalist>
-      </Fragment>
-    );
-  } else {
-    return (
-      <Fragment>
-        <label htmlFor="category-choice">Choose a category:</label>
-        <input
-          list="categories"
-          id="category-choice"
-          name="category-choice"
-          ref={currentCategory}
-          onClick={filterCategories}
-        />
+        <button onClick={clearFilteredTodos}>Reset Filter</button>
         <datalist id="categories">
           {/*         <option value="Chocolate"></option>
           <option value="Coconut"></option>
@@ -65,11 +50,15 @@ export function CategoryDropDown({ todos, setTodos }) {
 
           {todos
             ? todos.map((todo) => {
-                return <option key={todo.id} value={todo.category}></option>;
+                return (
+                  <Fragment>
+                     <option key={todo.id} value={todo.category}></option>;
+                  </Fragment>
+                )
               })
             : null}
         </datalist>
       </Fragment>
     );
   }
-}
+

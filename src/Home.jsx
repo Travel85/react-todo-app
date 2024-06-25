@@ -5,14 +5,14 @@ import { Fragment } from "react";
 import { TodoCard } from "./TodoCard";
 import { CategoryDropDown } from "./CategoryDropDown";
 
-export function Home({ todos, setTodos }) {
+export function Home({ todos, setTodos,filteredTodos, setFilteredTodos }) {
   return (
     <>
       <div className="app-container">
         <Input todos={todos} setTodos={setTodos}></Input>
-        <CategoryDropDown todos={todos}></CategoryDropDown>
-        {todos
-          ? todos.map((todo) => {
+        <CategoryDropDown todos={todos} filteredTodos={filteredTodos} setFilteredTodos={setFilteredTodos}></CategoryDropDown>
+        {filteredTodos.length > 0
+          ? filteredTodos.map((todo) => {
               return (
                 <Fragment key={todo.id}>
                   <TodoCard
@@ -26,7 +26,20 @@ export function Home({ todos, setTodos }) {
                 </Fragment>
               );
             })
-          : null}
+          : todos.map((todo) => {
+              return (
+                <Fragment key={todo.id}>
+                  <TodoCard
+                    title={todo.title}
+                    done={todo.done}
+                    id={todo.id}
+                    todos={todos}
+                    setTodos={setTodos}
+                    category={todo.category}
+                  />
+                </Fragment>
+              );
+            })}
 
         <div className="list-container"></div>
       </div>

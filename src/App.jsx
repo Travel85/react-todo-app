@@ -15,7 +15,7 @@ import { TodoCard } from "./TodoCard.jsx";
 function App() {
   const storedTodos = JSON.parse(localStorage.getItem("todos")) || [];
   const [todos, setTodos] = useState(storedTodos);
-
+  const [filteredTodos, setFilteredTodos] = useState([]);
   //weiteren State anlegen mit filterTodos, dann darüber iterieren
 
   useEffect(() => {
@@ -40,7 +40,7 @@ function App() {
       <Routes>
         <Route
           path="/"
-          element={<Home todos={todos} setTodos={setTodos}></Home>}></Route>
+          element={<Home todos={todos} setTodos={setTodos} filteredTodos={filteredTodos} setFilteredTodos={setFilteredTodos} ></Home>}></Route>
         <Route path="/:whatever" element={<ErrorPage />}></Route>
         <Route
           path="/todo/:catId"
