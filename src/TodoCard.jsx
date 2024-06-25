@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 
 import styled from "styled-components";
 
-export function TodoCard({ title, done, id, todos, setTodos, category }) {
+export function TodoCard({ title, done, id, todos, setTodos, category,filteredTodos,setFilteredTodos }) {
   const catId = useParams();
   //console.log(catId);
   //Rückgabe aller Todo außer, wenn der filter todo.id !== id;
@@ -13,6 +13,11 @@ export function TodoCard({ title, done, id, todos, setTodos, category }) {
   function handleDeleteOnClick() {
     setTodos(
       todos.filter((todo) => {
+        return todo.id !== id;
+      })
+    );
+    setFilteredTodos(
+      filteredTodos.filter((todo) => {
         return todo.id !== id;
       })
     );
@@ -31,8 +36,15 @@ export function TodoCard({ title, done, id, todos, setTodos, category }) {
         return todo;
       })
     );
+    setFilteredTodos(
+      filteredTodos.map((todo) => {
+        if (todo.id === id) {
+          todo.done = !todo.done;
+        }
+        return todo;
+      })
+    )
   }
-
   return (
     // Übergebe Styled Element property
     //Link zu todocard
