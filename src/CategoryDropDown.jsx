@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { Fragment } from "react";
 
-export function CategoryDropDown({ todos, setTodos,filteredTodos, setFilteredTodos }) {
+export function CategoryDropDown({ todos, setTodos,filteredTodos, setFilteredTodos,filter,setFilter }) {
   //ein State verwenden und categories als array speichern
   //dann mit includes prüfen, ob es bereits vorhanden ist und dann erst hinzufügen
   const currentCategory = useRef();
@@ -42,17 +42,11 @@ export function CategoryDropDown({ todos, setTodos,filteredTodos, setFilteredTod
         />
         <button onClick={clearFilteredTodos}>Reset Filter</button>
         <datalist id="categories">
-          {/*         <option value="Chocolate"></option>
-          <option value="Coconut"></option>
-          <option value="Mint"></option>
-          <option value="Strawberry"></option>
-          <option value="Vanilla"></option> */}
-
-          {todos
-            ? todos.map((todo) => {
+          {filter
+            ? filter.map((filterItem) => {
                 return (
                   <Fragment>
-                     <option key={todo.id} value={todo.category}></option>;
+                     <option value={filterItem}></option>;
                   </Fragment>
                 )
               })

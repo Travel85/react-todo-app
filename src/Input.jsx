@@ -1,13 +1,14 @@
 import { useEffect, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
 
-export function Input({ todos, setTodos }) {
+export function Input({ todos, setTodos,filter,setFilter }) {
   const todoNameRef = useRef();
   const categoryRef = useRef();
 
   function handleSubmit(e) {
     e.preventDefault();
     if (todoNameRef.current.value !== "" && categoryRef.current.value !== "") {
+      filter.includes(categoryRef.current.value) ? null : setFilter([...filter,categoryRef.current.value])
       setTodos([
         ...todos,
         {
