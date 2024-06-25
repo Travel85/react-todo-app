@@ -22,6 +22,8 @@ export function Home({ todos, setTodos,filteredTodos, setFilteredTodos }) {
                     todos={todos}
                     setTodos={setTodos}
                     category={todo.category}
+                    setFilteredTodos={setFilteredTodos}
+                    filteredTodos={filteredTodos}
                   />
                 </Fragment>
               );

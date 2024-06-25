@@ -14,7 +14,7 @@ export function CategoryDropDown({ todos, setTodos,filteredTodos, setFilteredTod
         return todo.category === currentCategory.current.value;
       })
     );
-    currentCategory.current.value = "";
+  
     // console.log(categories);
     // console.log(currentCategory.current.value);
 
