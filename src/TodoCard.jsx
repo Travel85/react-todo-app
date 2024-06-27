@@ -4,9 +4,21 @@ import { useParams } from "react-router-dom";
 
 import styled from "styled-components";
 
-export function TodoCard({ title, done, id, todos, setTodos, category,filteredTodos,setFilteredTodos }) {
-  const catId = useParams();
-  //console.log(catId);
+export function TodoCard({
+  title,
+  done,
+  id,
+  todos,
+  setTodos,
+  category,
+  filteredTodos,
+  setFilteredTodos,
+}) {
+  const { catId } = useParams();
+
+  //setCatId([useParams()]);
+  console.log(catId);
+
   //Rückgabe aller Todo außer, wenn der filter todo.id !== id;
   //(die id des iterierten todos ist genau die des angeklickten,
   // dann nicht zurückgeben) nicht zutrifft
@@ -43,12 +55,27 @@ export function TodoCard({ title, done, id, todos, setTodos, category,filteredTo
         }
         return todo;
       })
-    )
+    );
+  }
+
+  if (catId) {
+    return (
+      // Übergebe Styled Element property
+      //Link zu todocard
+      todos.map((todo) => {
+        if (todo.id === catId)
+          return (
+            <StyledTodoContainer done={todo.done}>
+              <TodoText done={todo.done}>{todo.title}</TodoText> - (
+              {todo.category})
+              <CiCircleCheck onClick={handleToggleOnClick} />
+              <FaRegTrashAlt onClick={handleDeleteOnClick} />
+            </StyledTodoContainer>
+          );
+      })
+    );
   }
   return (
-    // Übergebe Styled Element property
-    //Link zu todocard
-
     <StyledTodoContainer done={done}>
       <TodoText done={done}>{title}</TodoText> - ({category})
       <CiCircleCheck onClick={handleToggleOnClick} />
