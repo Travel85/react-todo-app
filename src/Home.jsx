@@ -26,6 +26,7 @@ export function Home({
           filteredTodos={filteredTodos}
           setFilteredTodos={setFilteredTodos}
           filter={filter}></CategoryDropDown>
+
         {filteredTodos.length > 0
           ? filteredTodos.map((todo) => {
               return (
@@ -37,6 +38,7 @@ export function Home({
                     todos={todos}
                     setTodos={setTodos}
                     category={todo.category}
+                    date={todo.date}
                     setFilteredTodos={setFilteredTodos}
                     filteredTodos={filteredTodos}
                   />
@@ -53,6 +55,7 @@ export function Home({
                     todos={todos}
                     setTodos={setTodos}
                     category={todo.category}
+                    date={todo.date}
                   />
                 </Fragment>
               );

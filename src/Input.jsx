@@ -1,20 +1,38 @@
 import { useEffect, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { DateTime, Interval } from "luxon";
 
-export function Input({ todos, setTodos,filter,setFilter }) {
+export function Input({ todos, setTodos, filter, setFilter }) {
   const todoNameRef = useRef();
   const categoryRef = useRef();
+  const dueDateRef = useRef();
+
+  function parseDate() {
+    //current date:
+    const now = DateTime.now();
+
+    const inputDate = DateTime.fromISO(dueDateRef.current.value);
+
+    // Calculate the interval
+    const dueDate = Interval.fromDateTimes(now, inputDate);
+    const parsedDueDate = Math.ceil(dueDate.length("days"));
+
+    console.log(parsedDueDate);
+  }
 
   function handleSubmit(e) {
     e.preventDefault();
     if (todoNameRef.current.value !== "" && categoryRef.current.value !== "") {
-      filter.includes(categoryRef.current.value) ? null : setFilter([...filter,categoryRef.current.value])
+      filter.includes(categoryRef.current.value)
+        ? null
+        : setFilter([...filter, categoryRef.current.value]);
       setTodos([
         ...todos,
         {
           id: uuidv4(),
-          title: todoNameRef.current.value,
-          category: categoryRef.current.value,
+          title: todoNameRef.current.value.toLowerCase(),
+          category: categoryRef.current.value.toLowerCase(),
+          date: dueDateRef.current.value,
           done: false,
         },
       ]);
@@ -27,22 +45,6 @@ export function Input({ todos, setTodos,filter,setFilter }) {
     categoryRef.current.value = "";
   }
 
-  function addItem() {
-    if (todoNameRef.current.value !== "") {
-      setTodos([
-        ...todos,
-        { id: uuidv4(), title: todoNameRef.current.value, done: false },
-      ]);
-      // localStorage.setItem(`todos`, JSON.stringify(todos));
-    }
-    // todoNameRef.current.value = "";
-  }
-
-  function addItemKeyPress(e) {
-    if (e.code === "Enter") {
-      addItem();
-    }
-  }
   /*   useEffect(() => {
     localStorage.setItem(`todos`, JSON.stringify(todos));
   }, [todos]); */
@@ -52,14 +54,7 @@ export function Input({ todos, setTodos,filter,setFilter }) {
       <div className="input-container">
         <form onSubmit={handleSubmit}>
           <label htmlFor="text">Enter item: </label>
-          <input
-            type="text"
-            name="text"
-            id="text"
-            ref={todoNameRef}
-            onKeyDown={addItemKeyPress}
-            required
-          />
+          <input type="text" name="text" id="text" ref={todoNameRef} required />
           <label htmlFor="text">Enter category: </label>
           <input
             type="text"
@@ -68,6 +63,13 @@ export function Input({ todos, setTodos,filter,setFilter }) {
             ref={categoryRef}
             required
           />
+          <label htmlFor="date">Due date:</label>
+          <input
+            type="date"
+            id="date"
+            name="date"
+            ref={dueDateRef}
+            onChange={parseDate}></input>
           <button id="send">Send</button>
           <button type="reset">Reset</button>
         </form>

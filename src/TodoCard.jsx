@@ -11,13 +11,14 @@ export function TodoCard({
   todos,
   setTodos,
   category,
+  date,
   filteredTodos,
   setFilteredTodos,
 }) {
   const { catId } = useParams();
 
   //setCatId([useParams()]);
-  console.log(catId);
+  //console.log(catId);
 
   //Rückgabe aller Todo außer, wenn der filter todo.id !== id;
   //(die id des iterierten todos ist genau die des angeklickten,
@@ -48,14 +49,6 @@ export function TodoCard({
         return todo;
       })
     );
-    setFilteredTodos(
-      filteredTodos.map((todo) => {
-        if (todo.id === id) {
-          todo.done = !todo.done;
-        }
-        return todo;
-      })
-    );
   }
 
   if (catId) {
@@ -67,7 +60,7 @@ export function TodoCard({
           return (
             <StyledTodoContainer done={todo.done}>
               <TodoText done={todo.done}>{todo.title}</TodoText> - (
-              {todo.category})
+              {todo.category}) - ({date})
               <CiCircleCheck onClick={handleToggleOnClick} />
               <FaRegTrashAlt onClick={handleDeleteOnClick} />
             </StyledTodoContainer>
@@ -77,7 +70,7 @@ export function TodoCard({
   }
   return (
     <StyledTodoContainer done={done}>
-      <TodoText done={done}>{title}</TodoText> - ({category})
+      <TodoText done={done}>{title}</TodoText> - ({category}) - ({date})
       <CiCircleCheck onClick={handleToggleOnClick} />
       <FaRegTrashAlt onClick={handleDeleteOnClick} />
     </StyledTodoContainer>
