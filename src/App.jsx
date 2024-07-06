@@ -1,6 +1,6 @@
 import "./App.css";
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { Fragment } from "react";
 
 import { Home } from "./Home";
@@ -19,47 +19,31 @@ function App() {
   const [todos, setTodos] = useState(storedTodos);
   const [filteredTodos, setFilteredTodos] = useState([]);
   const [filter, setFilter] = useState([]);
-
-  const notify = () => toast("Wow so easy!");
-  //weiteren State anlegen mit filterTodos, dann darüber iterieren
+  const [edit, setEdit] = useState(false);
 
   useEffect(() => {
     localStorage.setItem(`todos`, JSON.stringify(todos));
   }, [todos]);
 
-  useEffect(() => {
-    checkDueDate(), [todos];
-  });
-
-  function checkDueDate() {
+  const checkDueDate = () => {
     //current date:
     const now = DateTime.now();
-
-    /*         const inputDate = DateTime.fromISO(dueDateRef.current.value); */
-
-    // Calculate the interval
-    /*       const dueDate = Interval.fromDateTimes(now, inputDate);
-        const parsedDueDate = Math.ceil(dueDate.length("days")); */
-
-    // console.log(parsedDueDate);
 
     todos.map((todo) => {
       const inputDate = DateTime.fromISO(todo.date);
       const dueDate = Interval.fromDateTimes(now, inputDate);
       const parsedDueDate = Math.ceil(dueDate.length("days"));
-      if (parsedDueDate <= 3) {
-        console.log(`${todo.title} is due within ${parsedDueDate}`);
-        toast(`${todo.title} is due within ${parsedDueDate}`);
+      if (parsedDueDate <= 3 && !todo.done) {
+        // console.log(`${todo.title} is due within ${parsedDueDate} day(s)`);
+        toast(`${todo.title} is due within ${parsedDueDate} day(s)`);
       }
     });
+  };
 
-    // const inputDate = DateTime.fromISO(dueDateRef.current.value).toRelative();
-  }
-
+  checkDueDate();
   return (
     <Router>
       <Fragment>
-        <button onClick={notify}>Notify!</button>
         <ToastContainer />
         <Link to={`/`}>
           <h1 className="header">My Todo App</h1>

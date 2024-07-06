@@ -60,8 +60,6 @@ export function Home({
                 </Fragment>
               );
             })}
-
-        <div className="list-container"></div>
       </div>
     </>
   );
