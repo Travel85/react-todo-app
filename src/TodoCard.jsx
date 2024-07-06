@@ -1,6 +1,7 @@
 import { CiCircleCheck } from "react-icons/ci";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { useParams } from "react-router-dom";
+import { useState, useRef } from "react";
 
 import styled from "styled-components";
 
@@ -16,6 +17,9 @@ export function TodoCard({
   setFilteredTodos,
 }) {
   const { catId } = useParams();
+  const [edit, setEdit] = useState(false);
+  const updateTitleRef = useRef();
+  const currentTitleRef = useRef();
 
   //setCatId([useParams()]);
   //console.log(catId);
@@ -35,6 +39,27 @@ export function TodoCard({
       })
     );
   }
+  function handleToggleEdit() {
+    if (edit) {
+      setEdit(false);
+    } else {
+      setEdit(true);
+    }
+  }
+
+  function handleUpdateTitle() {
+    setTodos(
+      todos.map((todo) => {
+        if (todo.id === id && updateTitleRef.current.value != "") {
+          todo.title = updateTitleRef.current.value;
+        }
+        return todo;
+      })
+    );
+    updateTitleRef.current.value = "";
+    setEdit(false);
+  }
+
   //die Callbackfunktion iteriert über die todos vergleicht die id
   //des iterierten Todo mit der des angeklickten todos und invertiert
   //den boolean wert von 'done' property. Zuletzt setzt der setter (setTodos)
@@ -68,13 +93,35 @@ export function TodoCard({
       })
     );
   }
-  return (
-    <StyledTodoContainer done={done}>
-      <TodoText done={done}>{title}</TodoText> - ({category}) - ({date})
-      <CiCircleCheck onClick={handleToggleOnClick} />
-      <FaRegTrashAlt onClick={handleDeleteOnClick} />
-    </StyledTodoContainer>
-  );
+
+  if (!edit) {
+    return (
+      <StyledTodoContainer done={done}>
+        <TodoText done={done} onClick={handleToggleEdit} ref={currentTitleRef}>
+          {title}
+        </TodoText>{" "}
+        - ({category}) - ({date})
+        <CiCircleCheck onClick={handleToggleOnClick} />
+        <FaRegTrashAlt onClick={handleDeleteOnClick} />
+      </StyledTodoContainer>
+    );
+  } else {
+    return (
+      <StyledTodoContainer>
+        <input
+          type="text"
+          name="editText"
+          id="editText"
+          ref={updateTitleRef}
+          placeholder="Change Title..."
+          required></input>
+        <button type="submit" onClick={handleUpdateTitle}>
+          Submit
+        </button>
+        <button onClick={handleToggleEdit}>Cancel</button>
+      </StyledTodoContainer>
+    );
+  }
 }
 
 const TodoText = styled.p`

@@ -7,7 +7,7 @@ export function Input({ todos, setTodos, filter, setFilter }) {
   const categoryRef = useRef();
   const dueDateRef = useRef();
 
-  function parseDate() {
+  /*   function parseDate() {
     //current date:
     const now = DateTime.now();
 
@@ -18,7 +18,7 @@ export function Input({ todos, setTodos, filter, setFilter }) {
     const parsedDueDate = Math.ceil(dueDate.length("days"));
 
     console.log(parsedDueDate);
-  }
+  } */
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -64,12 +64,7 @@ export function Input({ todos, setTodos, filter, setFilter }) {
             required
           />
           <label htmlFor="date">Due date:</label>
-          <input
-            type="date"
-            id="date"
-            name="date"
-            ref={dueDateRef}
-            onChange={parseDate}></input>
+          <input type="date" id="date" name="date" ref={dueDateRef}></input>
           <button id="send">Send</button>
           <button type="reset">Reset</button>
         </form>
