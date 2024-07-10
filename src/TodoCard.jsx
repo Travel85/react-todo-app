@@ -2,20 +2,21 @@ import { CiCircleCheck } from "react-icons/ci";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import { useState, useRef } from "react";
-
+import useTodos from "./customHools/useTodos";
 import styled from "styled-components";
 
 export function TodoCard({
   title,
   done,
   id,
-  todos,
   setTodos,
   category,
   date,
   filteredTodos,
   setFilteredTodos,
 }) {
+  const { todos } = useTodos();
+
   const { catId } = useParams();
   const [edit, setEdit] = useState(false);
   const updateTitleRef = useRef();
@@ -114,7 +115,8 @@ export function TodoCard({
           id="editText"
           ref={updateTitleRef}
           placeholder="Change Title..."
-          required></input>
+          required
+        ></input>
         <button type="submit" onClick={handleUpdateTitle}>
           Submit
         </button>
