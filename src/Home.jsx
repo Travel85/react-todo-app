@@ -4,28 +4,22 @@ import { useState } from "react";
 import { Fragment } from "react";
 import { TodoCard } from "./TodoCard";
 import { CategoryDropDown } from "./CategoryDropDown";
+import useTodos from "./customHools/useTodos";
 
-export function Home({
-  todos,
-  setTodos,
-  filteredTodos,
-  setFilteredTodos,
-  filter,
-  setFilter,
-}) {
+export function Home() {
+  const { todos, setTodos, filteredTodos, setFilteredTodos, filter } =
+    useTodos();
+
   return (
     <>
       <div className="app-container">
-        <Input
-          todos={todos}
-          setTodos={setTodos}
-          setFilter={setFilter}
-          filter={filter}></Input>
+        <Input></Input>
         <CategoryDropDown
           todos={todos}
           filteredTodos={filteredTodos}
           setFilteredTodos={setFilteredTodos}
-          filter={filter}></CategoryDropDown>
+          filter={filter}
+        ></CategoryDropDown>
 
         {filteredTodos.length > 0
           ? filteredTodos.map((todo) => {

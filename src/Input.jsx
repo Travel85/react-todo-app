@@ -1,8 +1,11 @@
 import { useEffect, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { DateTime, Interval } from "luxon";
+import useTodos from "./customHools/useTodos";
 
-export function Input({ todos, setTodos, filter, setFilter }) {
+export function Input() {
+  const { todos, setTodos, filter, setFilter } = useTodos();
+
   const todoNameRef = useRef();
   const categoryRef = useRef();
   const dueDateRef = useRef();
