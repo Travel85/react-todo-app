@@ -1,6 +1,5 @@
 import "./App.css";
 
-import { useCallback, useState } from "react";
 import { Fragment } from "react";
 
 import { Home } from "./Home";
@@ -10,7 +9,7 @@ import { useEffect } from "react";
 import { DateTime } from "luxon";
 import { Interval } from "luxon";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
-import { TodoCard } from "./TodoCard.jsx";
+import { TodoCard } from "./Card/TodoCard.jsx";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { TodoProvider } from "./context/TodoContextHandler.jsx";

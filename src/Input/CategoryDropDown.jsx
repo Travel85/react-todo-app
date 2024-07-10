@@ -1,13 +1,12 @@
 import { useRef } from "react";
 import { Fragment } from "react";
-import useTodos from "./customHools/useTodos";
+import useTodos from "../customHools/useTodos";
 
 export function CategoryDropDown() {
   const { todos, setFilteredTodos, filter } = useTodos();
   //ein State verwenden und categories als array speichern
   //dann mit includes prüfen, ob es bereits vorhanden ist und dann erst hinzufügen
   const currentCategory = useRef();
-  //const [todos, setTodos] = useState(storedTodos);
 
   function filterCategories() {
     setFilteredTodos(
@@ -15,18 +14,6 @@ export function CategoryDropDown() {
         return todo.category === currentCategory.current.value;
       })
     );
-
-    // console.log(categories);
-    // console.log(currentCategory.current.value);
-
-    /*  console.log(currentCategory.current.value);
-    if (currentCategory.current.value !== "") {
-      setTodos(
-        todos.filter((todo) => {
-          return todo.category === currentCategory.current.value;
-        })
-      );
-    } */
   }
   function clearFilteredTodos() {
     setFilteredTodos([]);
