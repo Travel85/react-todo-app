@@ -26,19 +26,20 @@ export function Input() {
   function handleSubmit(e) {
     e.preventDefault();
     if (todoNameRef.current.value !== "" && categoryRef.current.value !== "") {
+      const newTodo = {
+        id: uuidv4(),
+        title: todoNameRef.current.value.toLowerCase(),
+        category: categoryRef.current.value.toLowerCase(),
+        date: dueDateRef.current.value,
+        done: false,
+      };
+
       filter.includes(categoryRef.current.value)
         ? null
         : setFilter([...filter, categoryRef.current.value]);
-      setTodos([
-        ...todos,
-        {
-          id: uuidv4(),
-          title: todoNameRef.current.value.toLowerCase(),
-          category: categoryRef.current.value.toLowerCase(),
-          date: dueDateRef.current.value,
-          done: false,
-        },
-      ]);
+      //setTodos([...todos, newTodo]);
+      const addTodoEvent = new CustomEvent("addTodo", { detail: newTodo });
+      window.dispatchEvent(addTodoEvent);
     }
 
     /*   console.log(categoryRef.current.value);

@@ -33,6 +33,19 @@ export function TodoCard({
         return todo.id !== id;
       })
     );
+    //items to be deleted:
+    todos.map((todo) => {
+      if (todo.id === id) {
+        const deleteTodoID = todo.id;
+
+        const deleteTodoEvent = new CustomEvent("deleteTodo", {
+          detail: deleteTodoID,
+        });
+        window.dispatchEvent(deleteTodoEvent);
+        // console.log(`Event send with id: ${deleteTodoID}`);
+      }
+    });
+
     setFilteredTodos(
       filteredTodos.filter((todo) => {
         return todo.id !== id;
@@ -48,14 +61,28 @@ export function TodoCard({
   }
 
   function handleUpdateTitle() {
-    setTodos(
+    /* setTodos(
       todos.map((todo) => {
         if (todo.id === id && updateTitleRef.current.value != "") {
           todo.title = updateTitleRef.current.value;
         }
         return todo;
       })
-    );
+    ); */
+
+    todos.map((todo) => {
+      if (todo.id === id && updateTitleRef.current.value != "") {
+        const updateTitleObj = {
+          id: id,
+          title: updateTitleRef.current.value.toLowerCase(),
+        };
+        const updateTitleEvent = new CustomEvent("updateTitle", {
+          detail: updateTitleObj,
+        });
+        window.dispatchEvent(updateTitleEvent);
+      }
+    });
+
     updateTitleRef.current.value = "";
     setEdit(false);
   }
@@ -66,14 +93,30 @@ export function TodoCard({
   //den Zustand der Todos auf den neuen Wert (die Todos aber
   //mit dem einem Todo property 'done' auf den anderen Wert (bei true -> false)
   function handleToggleOnClick() {
-    setTodos(
+    /*     setTodos(
       todos.map((todo) => {
         if (todo.id === id) {
           todo.done = !todo.done;
         }
         return todo;
       })
-    );
+    ); */
+    //items for toggling:
+    todos.map((todo) => {
+      if (todo.id === id) {
+        const toggleID = todo.id;
+        // console.log(`ID to be toggled: ${toggleID}`);
+
+        /*     const deleteTodoEvent = new CustomEvent("deleteTodo", {
+          detail: deleteTodoID,
+        }); */
+
+        const toggleTodoEvent = new CustomEvent("toggleTodo", {
+          detail: toggleID,
+        });
+        window.dispatchEvent(toggleTodoEvent);
+      }
+    });
   }
 
   if (catId) {

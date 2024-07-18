@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { Fragment } from "react";
 import useTodos from "../customHools/useTodos";
+import { v4 as uuidv4 } from "uuid";
 
 export function CategoryDropDown() {
   const { todos, setFilteredTodos, filter } = useTodos();
@@ -34,7 +35,7 @@ export function CategoryDropDown() {
         {filter
           ? filter.map((filterItem) => {
               return (
-                <Fragment>
+                <Fragment key={uuidv4()}>
                   <option value={filterItem}></option>;
                 </Fragment>
               );

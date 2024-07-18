@@ -1,20 +1,22 @@
 import "./App.css";
 
-import { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 
 import { Home } from "./Home";
 import { ErrorPage } from "./pages/ErrorPage.jsx";
 import { About } from "./pages/About.jsx";
-import { useEffect } from "react";
-import { DateTime } from "luxon";
-import { Interval } from "luxon";
+
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import { TodoCard } from "./Card/TodoCard.jsx";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { TodoProvider } from "./context/TodoContextHandler.jsx";
 
 function App() {
+  const getRoot = import.meta.env.VITE_BASE_URI;
+
+  //console.log(getRoot);
+
   /*   const storedTodos = JSON.parse(localStorage.getItem("todos")) || [];
   const [todos, setTodos] = useState(storedTodos);
   const [filteredTodos, setFilteredTodos] = useState([]);
